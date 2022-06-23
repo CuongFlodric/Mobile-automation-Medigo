@@ -1,1 +1,4 @@
-test/SimpleTest.class
+env\mainlogin.class
+parallel_test\user.class
+supportfunc\SupportFunc.class
+parallel_test\phamacy.class

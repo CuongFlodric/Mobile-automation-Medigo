@@ -8,6 +8,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import supportfunc.SupportFunc;
+
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -15,85 +17,50 @@ import java.util.concurrent.TimeUnit;
 public class user {
     @Test
     public void user_test() throws InterruptedException {
-        AppiumDriver<MobileElement> user;
+        AppiumDriver<MobileElement> driver;
         DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability("app", "bs://121c553fa8b4031b6789e7cbc1cf4b948bb5c01b");
-        // Specify device and os_version for testing
-        cap.setCapability("device", "Google Pixel 4");
-        cap.setCapability("os_version", "11.0");
-        // Set other BrowserStack capabilities
-        cap.setCapability("project", "First Java Project");
-        cap.setCapability("build", "Java Android");
-        cap.setCapability("name", "first_test");
-        cap.setCapability("browserstack.user", "hongphmnht_rEBk4M");
-        cap.setCapability("browserstack.key", "NJmuSSqNFNnRb4u8feqJ");
-        cap.setCapability("browserstack.networkLogs", "true");
-        try {
-            URL url = new URL("http://hub.browserstack.com/wd/hub");
-            user = new AndroidDriver<MobileElement>(url, cap);
-            user.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException("[ERR] Could not create new session");
-        }
+        cap.setCapability("appWaitActivity", "xyz.medigo.user.ui.login.medigologin.MedigoLoginActivity");
+//        user = SupportFunc.Connect_device(cap,"Google Pixel 3","10.0","binly_jlThrS","BFFviZkQQpdz9JbcvaYy","bs://2e8b898442583818805ff51a2c163a4654dd7ba1");
+        driver = SupportFunc.Connect_emulator(cap,"emulator-5554", "xyz.medigo.user", "xyz.medigo.user.ui.login.LoginActivity");
 
-        MobileElement user2 = user.findElementById("xyz.medigo.user:id/edtPhoneNumber");
-        user2.sendKeys("0987654321");
-        MobileElement user3 = user.findElementById("xyz.medigo.user:id/btnGetSMSCode");
-        user3.click();
-        MobileElement user4 = user.findElementById("xyz.medigo.user:id/txt_pin_entry");
-        user4.sendKeys("123456");
-        MobileElement user5 = user.findElementById("xyz.medigo.user:id/btnVerifySMSCode");
-        user5.click();
-        MobileElement user6 = user.findElementById("xyz.medigo.user:id/tv_allow_location");
-        user6.click();
-        MobileElement user7 = user.findElementById("com.android.permissioncontroller:id/permission_allow_foreground_only_button");
-        user7.click();
+        SupportFunc.Login_User(driver, "0987654321", "123456");
+        SupportFunc.Change_Location_Emulator_To_VN(driver);
 
-        MobileElement user8 = user.findElementById("xyz.medigo.user:id/home_address_location");
-        user8.click();
-        MobileElement user9 = user.findElementById("xyz.medigo.user:id/tv_address");
-        user9.click();
-        MobileElement user10 = user.findElementById("xyz.medigo.user:id/action_done");
-        user10.click();
-        MobileElement user11 = user.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/android.widget.LinearLayout/android.view.ViewGroup/android.widget.ImageView");
+        MobileElement user11 = driver.findElementById("xyz.medigo.user:id/tab_medicine");
         user11.click();
-        MobileElement user12 = user.findElementById("xyz.medigo.user:id/imgIconClose");
+        MobileElement user12 = driver.findElementById("xyz.medigo.user:id/imgIconClose");
         user12.click();
 
-        MobileElement user13 = user.findElementById("xyz.medigo.user:id/tvSearch");
+        MobileElement user13 = driver.findElementById("xyz.medigo.user:id/tvSearch");
         user13.click();
-        MobileElement user14 = user.findElementById("xyz.medigo.user:id/edtSearch");
+        MobileElement user14 = driver.findElementById("xyz.medigo.user:id/edtSearch");
         user14.sendKeys("do");
         Thread.sleep(500);
-        user.navigate().back();
-        MobileElement user141 = user.findElement(MobileBy.AndroidUIAutomator(
+        driver.navigate().back();
+        MobileElement user141 = driver.findElement(MobileBy.AndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true))" +
-                        ".scrollIntoView(new UiSelector().text(\"999,999 đ/lọ\"))"));
+                        ".scrollIntoView(new UiSelector().textContains(\"Đông Trùng Hạ Thảo\"))"));
         user141.click();
-        MobileElement user142 = user.findElementById("xyz.medigo.user:id/tvBuyNow");
+        MobileElement user142 = driver.findElementById("xyz.medigo.user:id/tvBuyNow");
         user142.click();
 
-        MobileElement user20 = user.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.ImageView[1]");
+        MobileElement user20 = driver.findElement(MobileBy.AndroidUIAutomator("new UiSelector().textContains(\"(COD)\")"));
         user20.click();
-        MobileElement user21 = user.findElementById("xyz.medigo.user:id/tvNext");
+        MobileElement user21 = driver.findElementById("xyz.medigo.user:id/tvNext");
         user21.click();
-        MobileElement user22 = user.findElementById("xyz.medigo.user:id/tvOrderSucessView");
+        MobileElement user22 = driver.findElementById("xyz.medigo.user:id/tvOrderSucessView");
         user22.click();
 
-        WebDriverWait wait = new WebDriverWait(user, 30);
-        wait.until(ExpectedConditions.visibilityOf(user.findElementById("com.android.permissioncontroller:id/permission_allow_button")));
-        MobileElement user23 = user.findElementById("com.android.permissioncontroller:id/permission_allow_button");
-        user23.click();
-        MobileElement user24 = user.findElementById("xyz.medigo.user:id/audio_btn_answer");
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(driver.findElementById("xyz.medigo.user:id/audio_btn_answer")));
+        MobileElement user24 = driver.findElementById("xyz.medigo.user:id/audio_btn_answer");
         user24.click();
 
-        WebDriverWait wait2 = new WebDriverWait(user, 30);
-        wait2.until(ExpectedConditions.visibilityOf(user.findElementById("xyz.medigo.user:id/shipper_number")));
-        user.navigate().back();
-        MobileElement user26 = user.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.drawerlayout.widget.DrawerLayout/android.view.ViewGroup/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]/android.widget.LinearLayout/android.view.ViewGroup");
+        WebDriverWait wait2 = new WebDriverWait(driver, 30);
+        wait2.until(ExpectedConditions.visibilityOf(driver.findElementById("xyz.medigo.user:id/shipper_number")));
+        driver.navigate().back();
+        MobileElement user26 = driver.findElementById("xyz.medigo.user:id/tab_home");
         user26.click();
-        user.quit();
+        driver.quit();
     }
 }
